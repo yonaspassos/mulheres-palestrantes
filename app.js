@@ -45,7 +45,8 @@ var directive = {
 
 $(function(){
     $.get("mulheres.json", {crossDomain: true}, function(data) {
-        $p('main').render(data, directive);
+        var s = shuffle(data.mulheres);
+        $p('main').render({ "mulheres": s }, directive);
         enableSearch();
     });
 });
@@ -60,6 +61,19 @@ function enableSearch() {
         filterCards($cards, filter);
     });
     $search.focus();
+};
+
+function shuffle(array) {
+  var m = array.length, t, i;
+
+  while (m) {
+    i = Math.floor(Math.random() * m--);
+    t = array[m];
+    array[m] = array[i];
+    array[i] = t;
+  }
+
+  return array;
 };
 
 var filterCards = debounce(function($cards, filter) {
